@@ -1,0 +1,164 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>划分VLAN（H3CIE实验） | Loniner</title><meta name="author" content="Loniner"><meta name="copyright" content="Loniner"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="划分VLAN对于SW11.	Sys2.	Vlan 103.	Port g1&#x2F;0&#x2F;14.	Vlan 205.	Port g1&#x2F;0&#x2F;26.	Int g1&#x2F;0&#x2F;37.	Port link-type trunk8.	Port trunk permit vlan 109.	Port trunk permit vlan 2010.	对于SW21.	S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="划分VLAN（H3CIE实验）">
+<meta property="og:url" content="https://loniner.github.io/2025/12/01/%E5%88%92%E5%88%86VLAN%EF%BC%88H3CIE%E5%AE%9E%E9%AA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="Loniner">
+<meta property="og:description" content="划分VLAN对于SW11.	Sys2.	Vlan 103.	Port g1&#x2F;0&#x2F;14.	Vlan 205.	Port g1&#x2F;0&#x2F;26.	Int g1&#x2F;0&#x2F;37.	Port link-type trunk8.	Port trunk permit vlan 109.	Port trunk permit vlan 2010.	对于SW21.	S">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://loniner.github.io/img/covers/cover3.jpg">
+<meta property="article:published_time" content="2025-12-01T13:58:00.000Z">
+<meta property="article:modified_time" content="2026-01-02T15:19:23.842Z">
+<meta property="article:author" content="Loniner">
+<meta property="article:tag" content="H3CIE学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://loniner.github.io/img/covers/cover3.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "划分VLAN（H3CIE实验）",
+  "url": "https://loniner.github.io/2025/12/01/%E5%88%92%E5%88%86VLAN%EF%BC%88H3CIE%E5%AE%9E%E9%AA%8C%EF%BC%89/",
+  "image": "https://loniner.github.io/img/covers/cover3.jpg",
+  "datePublished": "2025-12-01T13:58:00.000Z",
+  "dateModified": "2026-01-02T15:19:23.842Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Loniner",
+      "url": "https://loniner.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://loniner.github.io/2025/12/01/%E5%88%92%E5%88%86VLAN%EF%BC%88H3CIE%E5%AE%9E%E9%AA%8C%EF%BC%89/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '划分VLAN（H3CIE实验）',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div id="web_bg" style="background-image: url(/img/illust_103560446_20230501_035750_compressed.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/illust_106952511_20230513_083645_compressed.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/net/"><i class="fa-fw fas fa-network-wired"></i><span> Net</span></a></div><div class="menus_item"><a class="site-page" href="/article/"><i class="fa-fw fas fa-music"></i><span> war</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/covers/cover3.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Loniner</span></a><a class="nav-page-title" href="/"><span class="site-name">划分VLAN（H3CIE实验）</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/net/"><i class="fa-fw fas fa-network-wired"></i><span> Net</span></a></div><div class="menus_item"><a class="site-page" href="/article/"><i class="fa-fw fas fa-music"></i><span> war</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">划分VLAN（H3CIE实验）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-12-01T13:58:00.000Z" title="发表于 2025-12-01 21:58:00">2025-12-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-02T15:19:23.842Z" title="更新于 2026-01-02 23:19:23">2026-01-02</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/H3CIE%E5%AD%A6%E4%B9%A0/">H3CIE学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">82</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>划分VLAN<br>对于SW1<br>1.	Sys<br>2.	Vlan 10<br>3.	Port g1&#x2F;0&#x2F;1<br>4.	Vlan 20<br>5.	Port g1&#x2F;0&#x2F;2<br>6.	Int g1&#x2F;0&#x2F;3<br>7.	Port link-type trunk<br>8.	Port trunk permit vlan 10<br>9.	Port trunk permit vlan 20<br>10.	<br>对于SW2<br>1.	Sys<br>2.	Vlan 10<br>3.	Port g1&#x2F;0&#x2F;1<br>4.	Vlan 20<br>5.	Port g1&#x2F;0&#x2F;2<br>6.	Int g1&#x2F;0&#x2F;3<br>7.	Port link-type trunk<br>8.	Port trunk permit vlan 10<br>9.	Port trunk permit vlan 20</p>
+<p><img src="/%5Cimages%5Cpasted-1.png" alt="upload successful"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://loniner.github.io">Loniner</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://loniner.github.io/2025/12/01/%E5%88%92%E5%88%86VLAN%EF%BC%88H3CIE%E5%AE%9E%E9%AA%8C%EF%BC%89/">https://loniner.github.io/2025/12/01/%E5%88%92%E5%88%86VLAN%EF%BC%88H3CIE%E5%AE%9E%E9%AA%8C%EF%BC%89/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://loniner.github.io" target="_blank">Loniner</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/H3CIE%E5%AD%A6%E4%B9%A0/">H3CIE学习</a></div><div class="post-share"><div class="social-share" data-image="/img/covers/cover3.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/12/02/%E5%A4%A9%E6%B0%94%E5%A5%BD%E5%86%B7/" title="天气好冷"><img class="cover" src="/img/covers/cover4.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">天气好冷</div></div><div class="info-2"><div class="info-item-1">天好冷还要考体育，有点难受，其他课马上要期中考试了要复习了 </div></div></div></a><a class="pagination-related" href="/2025/12/01/%E5%B0%8F%E8%AF%B4/" title="文艺作品"><img class="cover" src="/img/covers/cover2.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">文艺作品</div></div><div class="info-2"><div class="info-item-1">似乎在感到空虚和困难的时候读一些文艺作品是一个很好的选择，一是可以逃避，再者可以讲心寄托到期中祈求它去帮助自己对于生活中懊恼的事情不去责怪也不去原谅可以保持心态的麻木 </div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/01/13/DHCP/" title="DHCP实验"><img class="cover" src="/img/covers/cover2.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-13</div><div class="info-item-2">DHCP实验</div></div><div class="info-2"><div class="info-item-1">配置DHCP 首先为连接交换机的端口配置ip interface GigabitEthernet 0&#x2F;0 ip address 172.16.0.1 24 开启DHCP服务Dhcp enable 禁用网关地址Dhcp server forbidden ip 192.168.1.1  设置ip池ip pool dhcp-pool1 为服务器分配网段network 192.168.1.0 mask 255.255.255.0 更改租期（默认为1天）expired day 1 hour 0 minute 0 对于pc设备 开启前  开启后  pc自动获取了ip地址 </div></div></div></a><a class="pagination-related" href="/2025/12/19/telnet%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/" title="telnet远程连接"><img class="cover" src="/img/covers/cover4.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-12-19</div><div class="info-item-2">telnet远程连接</div></div><div class="info-2"><div class="info-item-1">（在交换机中使用int vlan 1 进入vlan 1 ，在vlan 1 下配置ip） system-view 进入系统视图，这是配置大部分功能的起点。 interface GigabitEthernet 0&#x2F;0 进入千兆以太网接口 GigabitEthernet 0&#x2F;0 的配置模式。这是设备上的一个物理接口，将作为Telnet管理的接入接口。 ip address 1.1.1.1 24 为该接口配置IP地址 1.1.1.1，子网掩码为 255.255.255.0（&#x2F;24）。远程用户需要通过网络能访问到这个地址才能进行Telnet连接。 quit 退出接口配置视图，返回系统视图。 telnet server enable 全局启用Telnet服务器功能。 这是最关键的一步，没有这条命令，设备将拒绝所有Telnet连接请求。 local-user Loniner class manage 创建一个名为 Loniner 的管理类（class manage）本地用户。manage 类用户通常用于登录设备进行管理（如Telnet、SSH），区别于 netwo...</div></div></div></a><a class="pagination-related" href="/2025/12/23/H3CIE%E8%BF%9B%E5%BA%A6/" title="H3CIE进度"><img class="cover" src="/img/covers/cover1.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-12-23</div><div class="info-item-2">H3CIE进度</div></div><div class="info-2"><div class="info-item-1">从开始学习N3CNE已经一个月了，至于为什么报的是IE学的是NE，IE太难了要从NE开始学起，一个月才学了大概1&#x2F;3确实有点少，这段时间考试比较多（虽然像是借口），中间隔了好长一段时间才开始学习，我现在计算机网络原理没有一点基础，听网课的时候也总是暂停回放，好在时间还足够计划到明年3月份开始吧NE，SE，IE学完，开始做手考证。 </div></div></div></a><a class="pagination-related" href="/2026/01/13/%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%AE%89%E5%85%A8%E7%AB%AF%E5%8F%A3%E6%8A%80%E6%9C%AF/" title="交换机安全端口技术"><img class="cover" src="/img/covers/cover1.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-13</div><div class="info-item-2">交换机安全端口技术</div></div><div class="info-2"><div class="info-item-1">首先在交换机中开启dot1x服务 dot1x 进入端口开启dot1x interface GigabitEthernet 1&#x2F;0&#x2F;1 dot1x 之后创建用户，用户类型为network local-user Loniner class network 选择服务类型为lan-access service-type lan-access 设置密码 password simple 123456 之后若本机向交换机发送请求包都会被拦截  之后使用一些智能登录客户端如iNode客户端 输入之前创建的用户名和密码之后便可以连接 注意一下选项要关闭  变为  连接成功后  认证成功 </div></div></div></a><a class="pagination-related" href="/2026/01/02/%E7%94%9F%E6%88%90%E6%A0%91%E5%8D%8F%E8%AE%AE%E5%AE%9E%E9%AA%8C/" title="生成树协议实验"><img class="cover" src="/img/covers/cover2.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-02</div><div class="info-item-2">生成树协议实验</div></div><div class="info-2"><div class="info-item-1"> 先创建图示交换机使用	Dis stp brief检查当前生成树的根桥ID，和各个端口的状况（RP,DP,AP）此时SW1为根桥若想要使SW4成为根桥们可以通过修改优先级默认的优先级为32768，只需要将SW4的优先级改为比32768小就行了在SW4上		Stp priority 4096等待其收敛完成后查看根桥ID发现SW4已经成为新的根桥使闭塞端口出现在SW2上（或使某一个特定端口变为闭塞端口）通过修改某一个端口的cost值1）	进入该端口2）	Stp cost 100(设定cost值)3）	等待收敛 可以发现g1&#x2F;0&#x2F;2的端口状态已经变为ALTE状态(AP)，将某一个端口变为边缘接口1）	进入端口2）	Stp edged-port即可修改 </div></div></div></a><a class="pagination-related" href="/2026/01/10/FTP%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E5%AE%9E%E9%AA%8C/" title="FTP文件传输实验"><img class="cover" src="/img/covers/cover4.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-10</div><div class="info-item-2">FTP文件传输实验</div></div><div class="info-2"><div class="info-item-1">文件传输协议（File Transfer Protocol，FTP）是一种在网络中进行文件传输的广泛使用的标准协议。作为网络通信中的基础工具，FTP允许用户通过客户端软件与服务器进行交互，实现文件的上传、下载和其他文件操作。FTP工作在OSI模型的应用层，通常使用TCP作为其传输协议，确保数据传输的可靠性和顺序性。 为端口配置ip地址 ip add 192.168.56.2 24  创建用户 local-user test_ftp  设置密码（simple形式） password simple 123456789abcd  开通该用户的FTP服务，并为用户角色设置level权限 service-type ftp  authorization-attribute user-role level-15  最后打开FTP服务 ftp server enable  使用命令(ip地址为端口下的IP) ftp 192.168.56.2  之后输入用户名和密码即可进入 可以是用put命令上传文件（默认上传C:\Users\ASUS目录下的文件） put &lt;文件全称&gt;  使用get...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/illust_106952511_20230513_083645_compressed.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Loniner</div><div class="author-info-description">分享技术思考和日常生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Loniner" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/01/19/%E9%85%8D%E7%BD%AENAT%E8%AE%BE%E7%BD%AE/" title="配置NAT设置"><img src="/img/covers/cover1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="配置NAT设置"/></a><div class="content"><a class="title" href="/2026/01/19/%E9%85%8D%E7%BD%AENAT%E8%AE%BE%E7%BD%AE/" title="配置NAT设置">配置NAT设置</a><time datetime="2026-01-19T08:02:00.000Z" title="发表于 2026-01-19 16:02:00">2026-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/17/%E9%85%8D%E7%BD%AEACL%E5%8C%85%E8%BF%87%E6%BB%A4/" title="配置ACL包过滤"><img src="/img/covers/cover4.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="配置ACL包过滤"/></a><div class="content"><a class="title" href="/2026/01/17/%E9%85%8D%E7%BD%AEACL%E5%8C%85%E8%BF%87%E6%BB%A4/" title="配置ACL包过滤">配置ACL包过滤</a><time datetime="2026-01-17T11:16:00.000Z" title="发表于 2026-01-17 19:16:00">2026-01-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/14/%E9%85%8D%E7%BD%AEOSPF%E5%8D%8F%E8%AE%AE/" title="配置OSPF协议"><img src="/img/covers/cover3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="配置OSPF协议"/></a><div class="content"><a class="title" href="/2026/01/14/%E9%85%8D%E7%BD%AEOSPF%E5%8D%8F%E8%AE%AE/" title="配置OSPF协议">配置OSPF协议</a><time datetime="2026-01-14T14:27:00.000Z" title="发表于 2026-01-14 22:27:00">2026-01-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/13/DHCP/" title="DHCP实验"><img src="/img/covers/cover2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DHCP实验"/></a><div class="content"><a class="title" href="/2026/01/13/DHCP/" title="DHCP实验">DHCP实验</a><time datetime="2026-01-13T14:52:00.000Z" title="发表于 2026-01-13 22:52:00">2026-01-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/13/%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%AE%89%E5%85%A8%E7%AB%AF%E5%8F%A3%E6%8A%80%E6%9C%AF/" title="交换机安全端口技术"><img src="/img/covers/cover1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="交换机安全端口技术"/></a><div class="content"><a class="title" href="/2026/01/13/%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%AE%89%E5%85%A8%E7%AB%AF%E5%8F%A3%E6%8A%80%E6%9C%AF/" title="交换机安全端口技术">交换机安全端口技术</a><time datetime="2026-01-13T14:11:00.000Z" title="发表于 2026-01-13 22:11:00">2026-01-13</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Loniner</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><div class="js-pjax"></div><script async data-pjax src="/"></script></div></body></html>
